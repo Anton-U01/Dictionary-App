@@ -1,6 +1,7 @@
 package com.dictionaryapp.controller;
 
 import ch.qos.logback.core.model.Model;
+import com.dictionaryapp.model.entity.dto.UserLoginDto;
 import com.dictionaryapp.model.entity.dto.UserRegisterDto;
 import com.dictionaryapp.service.UserService;
 import jakarta.validation.Valid;
@@ -42,9 +43,34 @@ public class UserController {
         return "redirect:/login";
     }
 
+
+    @ModelAttribute("userLogin")
+    public UserLoginDto createLoginDto(){
+        return new UserLoginDto();
+    }
     @GetMapping("/login")
     public String viewLogin(){
         return "login";
+    }
+
+    @PostMapping("/login")
+    public String doLogin(@Valid UserLoginDto userLoginDto,
+                          BindingResult bindingResult,
+                          RedirectAttributes redirectAttributes){
+        if(bindingResult.hasErrors()){
+            redirectAttributes.addFlashAttribute("userLogin",userLoginDto);
+            redirectAttributes.addFlashAttribute("org.springframework.validation.BindingResult.userLogin",bindingResult);
+            return "redirect:/login";
+        }
+
+        boolean success = userService.login(userLoginDto);
+        if(!success){
+            redirectAttributes.addFlashAttribute("userLogin",userLoginDto);
+            redirectAttributes.addFlashAttribute("userPasMismatch",true);
+            return "redirect:/login";
+        }
+
+        return "redirect:/home";
     }
 
 }
