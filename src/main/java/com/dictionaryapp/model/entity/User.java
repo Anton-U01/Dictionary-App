@@ -5,6 +5,7 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 
+import java.util.HashSet;
 import java.util.Set;
 
 @Entity
@@ -18,6 +19,10 @@ public class User extends BaseEntity{
     private String email;
     @OneToMany(mappedBy = "addedBy")
     private Set<Word> addedWords;
+
+    public User() {
+        addedWords = new HashSet<>();
+    }
 
     public String getUsername() {
         return username;
