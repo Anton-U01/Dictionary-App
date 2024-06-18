@@ -3,6 +3,7 @@ package com.dictionaryapp.controller;
 import ch.qos.logback.core.model.Model;
 import com.dictionaryapp.model.entity.dto.UserLoginDto;
 import com.dictionaryapp.model.entity.dto.UserRegisterDto;
+import com.dictionaryapp.service.CurrentUser;
 import com.dictionaryapp.service.UserService;
 import jakarta.validation.Valid;
 import org.springframework.stereotype.Controller;
@@ -15,9 +16,11 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 @Controller
 public class UserController {
     private final UserService userService;
+    private CurrentUser currentUser;
 
-    public UserController(UserService userService) {
+    public UserController(UserService userService, CurrentUser currentUser) {
         this.userService = userService;
+        this.currentUser = currentUser;
     }
 
     @ModelAttribute("userRegister")
@@ -27,6 +30,9 @@ public class UserController {
 
     @GetMapping("/register")
     public String viewRegister(Model model){
+        if(currentUser.isLoggedIn()){
+            return "redirect:/home";
+        }
         return "register";
     }
 
@@ -50,6 +56,9 @@ public class UserController {
     }
     @GetMapping("/login")
     public String viewLogin(){
+        if(currentUser.isLoggedIn()){
+            return "redirect:/home";
+        }
         return "login";
     }
 
@@ -71,6 +80,13 @@ public class UserController {
         }
 
         return "redirect:/home";
+    }
+
+    @PostMapping("/logout")
+    public String logout(){
+        userService.logout();
+
+        return "redirect:/";
     }
 
 }

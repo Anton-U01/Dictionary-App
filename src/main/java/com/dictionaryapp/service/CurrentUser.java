@@ -15,11 +15,20 @@ public class CurrentUser {
         this.username = user.getUsername();
     }
 
+    public boolean isLoggedIn(){
+        return id != 0;
+    }
+
     public long getId() {
         return id;
     }
 
     public String getUsername() {
         return username;
+    }
+
+    public void logout() {
+        this.id = 0;
+        this.username = "";
     }
 }
