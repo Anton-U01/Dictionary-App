@@ -5,9 +5,7 @@ import com.dictionaryapp.service.WordService;
 import jakarta.validation.Valid;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 @Controller
@@ -37,6 +35,17 @@ public class WordController {
             redirectAttributes.addFlashAttribute("org.springframework.validation.BindingResult.addWord",bindingResult);
             return "redirect:/word-add";
         }
+        return "redirect:/home";
+    }
+
+    @DeleteMapping("/words/{id}")
+    public String deleteWord(@PathVariable("id") long id){
+        wordService.deleteWord(id);
+        return "redirect:/home";
+    }
+    @DeleteMapping("/words/delete-all")
+    public String deleteAllWords(){
+        wordService.deleteAllWords();
         return "redirect:/home";
     }
 }

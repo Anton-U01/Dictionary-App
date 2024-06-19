@@ -19,7 +19,10 @@
                         <span th:text="'Example: ' + ${word.example}"></span>
                         <br>
                         <span th:text=" 'Added by: ' + ${word.getAddedBy().username} + ' on ' + ${word.getInputDate()}"></span>
-                        <a class="ml-3 text-danger" href="/">Remove</a>
+                        <form th:method="DELETE"
+                              th:action="@{/words/{id}(id=${word.id})}">
+                            <button class="btn btn-danger" type="submit">Remove</button>
+                        </form>
                     </div>
             </div>
 
@@ -32,7 +35,10 @@
                         <span th:text="'Example: ' + ${word.example}"></span>
                         <br>
                         <span th:text=" 'Added by: ' + ${word.getAddedBy().username} + ' on ' + ${word.getInputDate()}"></span>
-                        <a class="ml-3 text-danger" href="/">Remove</a>
+                        <form th:method="DELETE"
+                              th:action="@{/words/{id}(id=${word.id})}">
+                            <button class="btn btn-danger" type="submit">Remove</button>
+                        </form>
                     </div>
             </div>
         </div>
@@ -47,7 +53,10 @@
                         <span th:text="'Example: ' + ${word.example}"></span>
                         <br>
                         <span th:text=" 'Added by: ' + ${word.getAddedBy().username} + ' on ' + ${word.getInputDate()}"></span>
-                        <a class="ml-3 text-danger" href="/">Remove</a>
+                        <form th:method="DELETE"
+                              th:action="@{/words/{id}(id=${word.id})}">
+                            <button class="btn btn-danger" type="submit">Remove</button>
+                        </form>
                     </div>
             </div>
 
@@ -60,11 +69,17 @@
                         <span th:text="'Example: ' + ${word.example}"></span>
                         <br>
                         <span th:text=" 'Added by: ' + ${word.getAddedBy().username} + ' on ' + ${word.getInputDate()}"></span>
-                        <a class="ml-3 text-danger" href="/">Remove</a>
+                        <form th:method="DELETE"
+                              th:action="@{/words/{id}(id=${word.id})}">
+                            <button class="btn btn-danger" type="submit">Remove</button>
+                        </form>
                     </div>
             </div>
         </div>
-        <a href="/home/remove-all" class="btn btn-danger" th:text=" 'Remove all ' + ${allWords.size()} + ' words'"></a>
+        <form th:method="DELETE"
+              th:action="@{/words/delete-all}">
+            <button class="btn btn-danger" th:text=" 'Remove all ' + ${allWords.size()} + ' words'" type="submit">Remove</button>
+        </form>
     </div>
 </main>
 <footer th:replace="~{fragments/commons::footer}"></footer>

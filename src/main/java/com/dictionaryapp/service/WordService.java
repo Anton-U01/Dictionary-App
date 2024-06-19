@@ -9,4 +9,7 @@ public interface WordService {
     List<Word> findAllWords();
 
     boolean addWord(AddWordDto addWordDto);
+    void deleteWord(long id);
+
+    void deleteAllWords();
 }
