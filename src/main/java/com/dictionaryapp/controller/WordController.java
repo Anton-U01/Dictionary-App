@@ -1,6 +1,7 @@
 package com.dictionaryapp.controller;
 
 import com.dictionaryapp.model.entity.dto.AddWordDto;
+import com.dictionaryapp.service.CurrentUser;
 import com.dictionaryapp.service.WordService;
 import jakarta.validation.Valid;
 import org.springframework.stereotype.Controller;
@@ -11,9 +12,11 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 @Controller
 public class WordController {
     private final WordService wordService;
+    private final CurrentUser currentUser;
 
-    public WordController(WordService wordService) {
+    public WordController(WordService wordService, CurrentUser currentUser) {
         this.wordService = wordService;
+        this.currentUser = currentUser;
     }
 
     @ModelAttribute("addWord")
@@ -23,6 +26,9 @@ public class WordController {
 
     @GetMapping("/word-add")
     public String viewAddWordPage(){
+        if(!currentUser.isLoggedIn()){
+            return "redirect:/";
+        }
         return "word-add";
     }
 
