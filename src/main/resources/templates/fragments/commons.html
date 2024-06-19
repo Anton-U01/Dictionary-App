@@ -13,7 +13,7 @@
 <header>
     <nav class="navbar navbar-expand-lg bg-nav rounded " >
         <a th:unless="${@currentUser.isLoggedIn()}" class="nav-link my-text-color active h5 " th:href="@{/}">Dictionary App</a>
-        <a th:if="${@currentUser.isLoggedIn()}" class="nav-link my-text-color active h5  " th:href="@{/add-word}">Add Word</a>
+        <a th:if="${@currentUser.isLoggedIn()}" class="nav-link my-text-color active h5  " th:href="@{/word-add}">Add Word</a>
 
         <div class="collapse navbar-collapse d-flex justify-content-end" id="navbarNav">
             <ul class="navbar-nav row">

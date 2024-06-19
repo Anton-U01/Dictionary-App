@@ -1,30 +1,33 @@
-package com.dictionaryapp.model.entity;
+package com.dictionaryapp.model.entity.dto;
 
-import jakarta.persistence.*;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.PastOrPresent;
+import jakarta.validation.constraints.Size;
 
 import java.time.LocalDate;
 
-@Entity
-@Table(name = "words")
-public class Word extends BaseEntity{
-    @Column(nullable = false)
-    private String Term;
-    @Column(nullable = false)
+public class AddWordDto {
+    @NotBlank
+    @Size(min = 2,max = 40)
+    private String term;
+    @NotBlank
+    @Size(min = 2,max = 80)
     private String translation;
+    @Size(min = 2,max = 200)
     private String example;
-    @Column(nullable = false)
+    @NotNull
+    @PastOrPresent
     private LocalDate inputDate;
-    @ManyToOne(optional = false)
-    private Language language;
-    @ManyToOne(optional = false)
-    private User addedBy;
+    @NotBlank
+    private String language;
 
     public String getTerm() {
-        return Term;
+        return term;
     }
 
     public void setTerm(String term) {
-        Term = term;
+        this.term = term;
     }
 
     public String getTranslation() {
@@ -51,19 +54,11 @@ public class Word extends BaseEntity{
         this.inputDate = inputDate;
     }
 
-    public Language getLanguage() {
+    public String getLanguage() {
         return language;
     }
 
-    public void setLanguage(Language language) {
+    public void setLanguage(String language) {
         this.language = language;
-    }
-
-    public User getAddedBy() {
-        return addedBy;
-    }
-
-    public void setAddedBy(User addedBy) {
-        this.addedBy = addedBy;
     }
 }
